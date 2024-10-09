@@ -1,44 +1,39 @@
 import { populationAtom } from "@/recoil";
 import type { Prefecture } from "@/type";
 import axios from "axios";
-import { type ChangeEvent, useState } from "react";
+import { type ChangeEvent, useRef } from "react";
 import { useRecoilState } from "recoil";
 
 const Checkbox = (prefecture: Prefecture) => {
-	const [checked, setChecked] = useState<boolean>(false);
+	const checkedRef = useRef<boolean>(false);
 	const [prefPopulation, setPrefPopulation] = useRecoilState(populationAtom);
-	const handleCheck = (prefName: string, prefCode: number, check: boolean) => {
-		const c_prefPopulation = prefPopulation.slice();
-		if (check) {
-			if (
-				c_prefPopulation?.findIndex((value) => value.prefName === prefName) !==
-				-1
-			)
-				return;
 
+	const handleCheck = (prefName: string, prefCode: number, check: boolean) => {
+		checkedRef.current = check;
+
+		if (check) {
 			axios
 				.get(`population/composition/perYear?prefCode=${prefCode}`)
 				.then((results) => {
-					c_prefPopulation.push({
-						prefName: prefName,
-						data: results.data.result.data[0].data,
-					});
-
-					setPrefPopulation(c_prefPopulation);
+					setPrefPopulation([
+						...prefPopulation,
+						{
+							prefName: prefName,
+							data: results.data.result.data[0].data,
+						},
+					]);
 				})
 				.catch(() => {
 					return;
 				});
-		} else {
-			const deleteIndex = c_prefPopulation.findIndex(
-				(value) => value.prefName === prefName,
-			);
-			if (deleteIndex === -1) return;
-			c_prefPopulation.splice(deleteIndex, 1);
-			setPrefPopulation(c_prefPopulation);
+			return;
 		}
-		setChecked((prev) => !prev);
+
+		setPrefPopulation(
+			[...prefPopulation].filter((value) => value.prefName !== prefName),
+		);
 	};
+
 	return (
 		<li className="flex m-2">
 			<input
@@ -56,8 +51,8 @@ const Checkbox = (prefecture: Prefecture) => {
 			/>
 			<label
 				htmlFor={`checkbox${prefecture.prefCode}`}
-				className={`px-3 py-2 cursor-pointer rounded-3xl border-2 border-solid box-border hover:opacity-70
-                    ${checked ? "bg-gradient-to-r border-current from-customBlue/75 to-customBlue text-white" : "bg-white"}`}
+				className={`px-3 py-2 cursor-pointer rounded-3xl border-2 border-solid box-border hover:opacity-70 
+					${checkedRef.current ? "bg-gradient-to-r border-current from-customBlue/75 to-customBlue text-white" : "bg-white"}`}
 			>
 				{prefecture.prefName}
 			</label>
