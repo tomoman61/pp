@@ -1,9 +1,9 @@
-import type { Population, PrefectureResponse } from "@/type";
+import type { Population, Prefecture } from "@/type";
 import { atom } from "recoil";
 
-export const prefecturesAtom = atom<PrefectureResponse | null>({
+export const prefecturesAtom = atom<Prefecture[]>({
 	key: "prefectures",
-	default: null,
+	default: [],
 });
 
 export const populationAtom = atom<

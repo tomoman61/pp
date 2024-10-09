@@ -1,10 +1,28 @@
 import Graph from "@/components/Graph";
 import Prefectures from "@/components/Prefectures";
+import axios from "@/config/axios";
+import { prefecturesAtom } from "@/recoil";
+import type { PrefectureResponse } from "@/type";
+import type { AxiosResponse } from "axios";
+import { useEffect } from "react";
+
+import { useRecoilState } from "recoil";
 
 const Main = () => {
+	const [prefectures, setPrefectures] = useRecoilState(prefecturesAtom);
+
+	useEffect(() => {
+		axios
+			.get("prefectures")
+			.then((res: AxiosResponse<PrefectureResponse>) => {
+				setPrefectures(res.data.result);
+			})
+			.catch(() => {});
+	}, [setPrefectures]);
+	if (prefectures.length === 0) return <>読み込み中です...</>;
 	return (
 		<main>
-			<Prefectures />
+			<Prefectures prefectures={prefectures} />
 			<Graph />
 		</main>
 	);

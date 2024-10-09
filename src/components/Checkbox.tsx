@@ -6,7 +6,7 @@ import { useRecoilState } from "recoil";
 
 const Checkbox = (prefecture: Prefecture) => {
 	const checkedRef = useRef<boolean>(false);
-	const [prefPopulation, setPrefPopulation] = useRecoilState(populationAtom);
+	const [population, setPopulation] = useRecoilState(populationAtom);
 
 	const handleCheck = (prefName: string, prefCode: number, check: boolean) => {
 		checkedRef.current = check;
@@ -15,8 +15,8 @@ const Checkbox = (prefecture: Prefecture) => {
 			axios
 				.get(`population/composition/perYear?prefCode=${prefCode}`)
 				.then((results) => {
-					setPrefPopulation([
-						...prefPopulation,
+					setPopulation([
+						...population,
 						{
 							prefName: prefName,
 							data: results.data.result.data[0].data,
@@ -29,8 +29,8 @@ const Checkbox = (prefecture: Prefecture) => {
 			return;
 		}
 
-		setPrefPopulation(
-			[...prefPopulation].filter((value) => value.prefName !== prefName),
+		setPopulation(
+			[...population].filter((value) => value.prefName !== prefName),
 		);
 	};
 
