@@ -1,8 +1,8 @@
+import Checkbox from "@/components/Checkbox";
 import axios from "@/config/axios";
 import { prefecturesAtom } from "@/recoil";
 import { useEffect } from "react";
 import { useRecoilState } from "recoil";
-import Checkbox from "./Checkbox";
 
 const Prefectures = () => {
 	const [prefectures, setPrefectures] = useRecoilState(prefecturesAtom);

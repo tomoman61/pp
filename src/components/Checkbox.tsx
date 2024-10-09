@@ -1,6 +1,6 @@
+import axios from "@/config/axios";
 import { populationAtom } from "@/recoil";
 import type { Prefecture } from "@/type";
-import axios from "axios";
 import { type ChangeEvent, useRef } from "react";
 import { useRecoilState } from "recoil";
 

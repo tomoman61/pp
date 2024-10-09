@@ -1,5 +1,5 @@
+import type { Population, PrefectureResponse } from "@/type";
 import { atom } from "recoil";
-import type { Population, PrefectureResponse } from "./type";
 
 export const prefecturesAtom = atom<PrefectureResponse | null>({
 	key: "prefectures",
