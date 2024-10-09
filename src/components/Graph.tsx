@@ -47,32 +47,6 @@ const Graph = () => {
 	return (
 		<section>
 			<h2 className="font-bold text-xl">人口推移グラフ</h2>
-			<fieldset className="flex p-2">
-				<div className="mx-2">
-					<input type="radio" name="population" id="total" defaultChecked />
-					<label htmlFor="total" className="pl-1">
-						総人口
-					</label>
-				</div>
-				<div className="mx-2">
-					<input type="radio" name="population" id="young" />
-					<label htmlFor="young" className="pl-1">
-						年少人口
-					</label>
-				</div>
-				<div className="mx-2">
-					<input type="radio" name="population" id="working-age" />
-					<label htmlFor="working-age" className="pl-1">
-						生産年齢人口
-					</label>
-				</div>
-				<div className="mx-2">
-					<input type="radio" name="population" id="elderly" />
-					<label htmlFor="elderly" className="pl-1">
-						老年人口
-					</label>
-				</div>
-			</fieldset>
 			<HighchartsReact highcharts={Highcharts} options={options} />
 		</section>
 	);
