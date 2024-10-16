@@ -1,6 +1,6 @@
 import axios from "@/config/axios";
 import { populationAtom } from "@/recoil";
-import type { Prefecture } from "@/type";
+import type { PopulationSuccessResponse, Prefecture } from "@/type";
 import { type ChangeEvent, useRef } from "react";
 import { useRecoilState } from "recoil";
 
@@ -13,22 +13,53 @@ const Checkbox = ({ prefecture }: { prefecture: Prefecture }) => {
 
 		if (check) {
 			axios
-				.get(`population/composition/perYear?prefCode=${prefCode}`)
+				.get<PopulationSuccessResponse>(
+					`population/composition/perYear?prefCode=${prefCode}`,
+				)
 				.then((results) => {
-					setPopulation([
+					setPopulation({
 						...population,
-						{
-							prefName: prefName,
-							data: results.data.result.data[0].data,
-						},
-					]);
+						total: [
+							...population.total,
+							{
+								prefName,
+								data: results.data.result.data[0].data,
+							},
+						],
+						young: [
+							...population.young,
+							{
+								prefName,
+								data: results.data.result.data[1].data,
+							},
+						],
+						workingAge: [
+							...population.workingAge,
+							{ prefName, data: results.data.result.data[2].data },
+						],
+						elderly: [
+							...population.elderly,
+							{
+								prefName,
+								data: results.data.result.data[3].data,
+							},
+						],
+					});
 				});
 			return;
 		}
 
-		setPopulation(
-			[...population].filter((value) => value.prefName !== prefName),
-		);
+		setPopulation({
+			...population,
+			total: population.total.filter((value) => value.prefName !== prefName),
+			young: population.young.filter((value) => value.prefName !== prefName),
+			workingAge: population.workingAge.filter(
+				(value) => value.prefName !== prefName,
+			),
+			elderly: population.elderly.filter(
+				(value) => value.prefName !== prefName,
+			),
+		});
 	};
 
 	return (

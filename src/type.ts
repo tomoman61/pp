@@ -4,8 +4,8 @@ export type Prefecture = {
 	prefName: string;
 };
 
-export type PrefectureResponse = {
-	message: string | null;
+export type PrefectureSuccessResponse = {
+	message: null;
 	result: Prefecture[];
 };
 
@@ -23,23 +23,42 @@ export type Population = {
 	rate: number;
 };
 
-export type TotalPopulationStatistics = {
+type TotalPopulationStatistics = {
 	label: typeof PopulationLabels.TOTAL;
-	records: Omit<Population, "rate">[];
+	data: Omit<Population, "rate">[];
 };
 
-export type PopulationStatistics = {
-	label:
-		| typeof PopulationLabels.YOUNG
-		| typeof PopulationLabels.WORKING_AGE
-		| typeof PopulationLabels.ELDERLY;
-	records: Population[];
+type PopulationYoungStatistics = {
+	label: typeof PopulationLabels.YOUNG;
+	data: Population[];
 };
 
-export type PopulationResponse = {
-	message: string | null;
+type PopulationWorkingAgeStatistics = {
+	label: typeof PopulationLabels.WORKING_AGE;
+	data: Population[];
+};
+
+type PopulationElderlyStatistics = {
+	label: typeof PopulationLabels.ELDERLY;
+	data: Population[];
+};
+
+export type PopulationSuccessResponse = {
+	message: null;
 	result: {
 		boundaryYear: number;
-		data: (TotalPopulationStatistics | PopulationStatistics)[];
-	} | null;
+		data: [
+			TotalPopulationStatistics,
+			PopulationYoungStatistics,
+			PopulationWorkingAgeStatistics,
+			PopulationElderlyStatistics,
+		];
+	};
+};
+
+export type PopulationCategory = {
+	total: { prefName: string; data: Omit<Population, "rate">[] }[];
+	young: { prefName: string; data: Population[] }[];
+	workingAge: { prefName: string; data: Population[] }[];
+	elderly: { prefName: string; data: Population[] }[];
 };

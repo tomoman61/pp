@@ -2,7 +2,7 @@ import Graph from "@/components/Graph";
 import Prefectures from "@/components/Prefectures";
 import axios from "@/config/axios";
 import { prefecturesAtom } from "@/recoil";
-import type { PrefectureResponse } from "@/type";
+import type { PrefectureSuccessResponse } from "@/type";
 import type { AxiosResponse } from "axios";
 import { useEffect } from "react";
 
@@ -14,7 +14,7 @@ const Main = () => {
 	useEffect(() => {
 		axios
 			.get("prefectures")
-			.then((res: AxiosResponse<PrefectureResponse>) => {
+			.then((res: AxiosResponse<PrefectureSuccessResponse>) => {
 				setPrefectures(res.data.result);
 			})
 			.catch(() => {});

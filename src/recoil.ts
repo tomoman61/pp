@@ -1,4 +1,4 @@
-import type { Population, Prefecture } from "@/type";
+import type { PopulationCategory, Prefecture } from "@/type";
 import { atom } from "recoil";
 
 export const prefecturesAtom = atom<Prefecture[]>({
@@ -6,9 +6,12 @@ export const prefecturesAtom = atom<Prefecture[]>({
 	default: [],
 });
 
-export const populationAtom = atom<
-	{ prefName: string; data: Omit<Population, "rate">[] }[]
->({
+export const populationAtom = atom<PopulationCategory>({
 	key: "population",
-	default: [],
+	default: {
+		total: [],
+		young: [],
+		workingAge: [],
+		elderly: [],
+	},
 });
