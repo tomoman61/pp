@@ -7,9 +7,9 @@ const Prefectures = ({ prefectures }: { prefectures: Prefecture[] }) => {
 			<legend className="font-bold text-xl">都道府県</legend>
 			<ul className="flex flex-wrap p-4">
 				{prefectures.map((prefecture) => (
-					<div key={prefecture.prefName}>
-						<Checkbox {...prefecture} />
-					</div>
+					<li key={prefecture.prefCode} className="flex m-2">
+						<Checkbox prefecture={prefecture} />
+					</li>
 				))}
 			</ul>
 		</fieldset>

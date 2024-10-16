@@ -4,7 +4,7 @@ import type { Prefecture } from "@/type";
 import { type ChangeEvent, useRef } from "react";
 import { useRecoilState } from "recoil";
 
-const Checkbox = (prefecture: Prefecture) => {
+const Checkbox = ({ prefecture }: { prefecture: Prefecture }) => {
 	const checkedRef = useRef<boolean>(false);
 	const [population, setPopulation] = useRecoilState(populationAtom);
 
@@ -22,9 +22,6 @@ const Checkbox = (prefecture: Prefecture) => {
 							data: results.data.result.data[0].data,
 						},
 					]);
-				})
-				.catch(() => {
-					return;
 				});
 			return;
 		}
@@ -35,7 +32,7 @@ const Checkbox = (prefecture: Prefecture) => {
 	};
 
 	return (
-		<li className="flex m-2">
+		<>
 			<input
 				type="checkbox"
 				name="prefecture"
@@ -56,7 +53,7 @@ const Checkbox = (prefecture: Prefecture) => {
 			>
 				{prefecture.prefName}
 			</label>
-		</li>
+		</>
 	);
 };
 
