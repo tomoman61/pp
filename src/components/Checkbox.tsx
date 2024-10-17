@@ -18,7 +18,6 @@ const Checkbox = ({ prefecture }: { prefecture: Prefecture }) => {
 				)
 				.then((results) => {
 					setPopulation({
-						...population,
 						total: [
 							...population.total,
 							{
@@ -50,7 +49,6 @@ const Checkbox = ({ prefecture }: { prefecture: Prefecture }) => {
 		}
 
 		setPopulation({
-			...population,
 			total: population.total.filter((value) => value.prefName !== prefName),
 			young: population.young.filter((value) => value.prefName !== prefName),
 			workingAge: population.workingAge.filter(

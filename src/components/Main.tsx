@@ -1,4 +1,4 @@
-import Graph from "@/components/Graph";
+import Graphs from "@/components/Graphs";
 import Prefectures from "@/components/Prefectures";
 import axios from "@/config/axios";
 import { prefecturesAtom } from "@/recoil";
@@ -23,7 +23,7 @@ const Main = () => {
 	return (
 		<main>
 			<Prefectures prefectures={prefectures} />
-			<Graph />
+			<Graphs />
 		</main>
 	);
 };

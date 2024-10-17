@@ -56,9 +56,19 @@ export type PopulationSuccessResponse = {
 	};
 };
 
-export type PopulationCategory = {
-	total: { prefName: string; data: Omit<Population, "rate">[] }[];
-	young: { prefName: string; data: Population[] }[];
-	workingAge: { prefName: string; data: Population[] }[];
-	elderly: { prefName: string; data: Population[] }[];
+export type PopulationCategoryTotal = {
+	prefName: string;
+	data: Omit<Population, "rate">[];
+};
+
+export type PopulationCategoryNotTotal = {
+	prefName: string;
+	data: Population[];
+};
+
+export type PopulationCategoryAll = {
+	total: PopulationCategoryTotal[];
+	young: PopulationCategoryNotTotal[];
+	workingAge: PopulationCategoryNotTotal[];
+	elderly: PopulationCategoryNotTotal[];
 };
